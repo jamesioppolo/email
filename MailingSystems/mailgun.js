@@ -7,7 +7,6 @@ module.exports = {
         if (mailMessage.cc === "") {
             mailMessage.cc = null;
         }   
-        console.log(mailMessage);
         mg.messages().send(mailMessage, function (error, response) {
             if (error) {
                 callback({
