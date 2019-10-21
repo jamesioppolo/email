@@ -2,7 +2,20 @@ const mailgun = require("../MailingSystems/mailgun");
 const sendgrid = require("../MailingSystems/sendgrid");
 
 module.exports = {
-    send: (mailMessage, callback) => {
+    send: (body, callback) => {
+        const mailMessage = {
+            from: body.from,
+            to: body.recipients,
+            subject: body.subject,
+            text: body.message
+        };
+        if (body.cc && body.cc != '') {
+            mailMessage.cc = body.cc;
+        }
+        if (body.bcc && body.bcc != '') {
+            mailMessage.bcc = body.bcc;
+        }
+
         let client1 = sendgrid;
         let client2 = mailgun;
         client1.send(mailMessage, (client1Response) => {
