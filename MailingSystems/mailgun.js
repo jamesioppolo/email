@@ -4,6 +4,10 @@ const mg = mailgun({apiKey: 'd0acd922f8e5b832cc844dcf503cb3c1-9c988ee3-0a6f7ecb'
 
 module.exports = {
     send: (mailMessage, callback)  => {
+        if (mailMessage.cc === "") {
+            mailMessage.cc = null;
+        }   
+        console.log(mailMessage);
         mg.messages().send(mailMessage, function (error, response) {
             if (error) {
                 callback({

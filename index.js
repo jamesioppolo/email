@@ -1,4 +1,5 @@
-const mailgun = require("./mailgun");
+const mailgun = require("./MailingSystems/mailgun");
+const sendgrid = require("./MailingSystems/sendgrid");
 const express = require("express");
 const PORT = 8080;
 const app = express();
@@ -23,12 +24,24 @@ app.post('/email', async (req, res) => {
         subject: subject,
         text: message
     };
-    console.log(data);
-    mailgun.send(data, (response) => {
+    if (cc && cc != '') {
+        data.cc = cc;
+    }
+    if (bcc & cc != '') {
+        data.bcc = bcc;
+    }
+    sendgrid.send(data, (response) => {
         if (response.statusCode === 200) {
-            res.send(response.message);
+            res.send(response);        
         } else {
             res.status(response.statusCode).send(response.message);
         }
     });
+    // mailgun.send(data, (response) => {
+    //     if (response.statusCode === 200) {
+    //         res.send(response.message);
+    //     } else {
+    //         res.status(response.statusCode).send(response.message);
+    //     }
+    // });
 });
