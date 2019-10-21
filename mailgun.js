@@ -16,7 +16,7 @@ module.exports = {
                     statusCode: 200, 
                     message: {
                         system: 'Mailgun',
-                        resonse: response
+                        response: response
                     }
                 });
             }                   
