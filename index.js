@@ -1,10 +1,11 @@
-const mailController = require("./MailController/mailController");
-const express = require("express");
+
+import { send } from "./MailController/mailController";
+import express from "express";
 const PORT = 8080;
 const app = express();
-var bodyParser = require('body-parser');
-app.use(bodyParser.json()); // support json encoded bodies
-app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+import { json, urlencoded } from 'body-parser';
+app.use(json()); // support json encoded bodies
+app.use(urlencoded({ extended: true })); // support encoded bodies
 
 app.listen(PORT, () => {
  console.log(`Server is listening on port: ${PORT}`);
@@ -29,7 +30,7 @@ app.post('/email', async (req, res) => {
     if (bcc && bcc != '') {
         data.bcc = bcc;
     }
-    mailController.send(data, (response) => {
+    send(data, (response) => {
         if (response.statusCode === 200) {
             res.send(response);        
         } else {
