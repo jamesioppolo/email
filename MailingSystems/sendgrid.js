@@ -15,31 +15,35 @@ function getPersonalizationsFor(mailAddresses) {
     return emailList;
 }
 
+function getBodyFor(mailMessage) {
+    var dataString = {
+        'personalizations': [
+            {
+                'to': getPersonalizationsFor(mailMessage.to)
+            }
+        ],
+        'from': {
+            'email': mailMessage.from
+        },
+        'subject': mailMessage.subject,
+        'content': [
+            {
+                'type': 'text/plain',
+                'value': mailMessage.text
+            }
+        ]
+    };
+    if (mailMessage.cc && mailMessage.cc !== '') {
+        dataString.personalizations.cc = getPersonalizationsFor(mailMessage.cc);
+    }
+    if (mailMessage.bcc && mailMessage.bcc !== '') {
+        dataString.personalizations.bcc = getPersonalizationsFor(mailMessage.bcc);
+    }
+    return JSON.stringify(dataString);
+}
+
 module.exports = {
     send: (mailMessage, callback) => {
-        var dataString = {
-            "personalizations": [
-                { 
-                    "to": getPersonalizationsFor(mailMessage.to) 
-                }
-            ],
-            "from": {
-                "email": mailMessage.from
-            },
-            "subject": mailMessage.subject,
-            "content": [
-                {
-                    "type": "text/plain", 
-                    "value": mailMessage.text
-                }
-            ]
-        };
-        if (mailMessage.cc && mailMessage.cc !== "") {
-            dataString.personalizations.cc = getPersonalizationsFor(mailMessage.cc);
-        }
-        if (mailMessage.bcc && mailMessage.bcc !== "") {
-            dataString.personalizations.bcc = getPersonalizationsFor(mailMessage.bcc);
-        }
 
         var headers = {
             'Authorization': `Bearer ${process.env.SENDGRID_API_KEY}`,
@@ -49,7 +53,7 @@ module.exports = {
             url: 'https://api.sendgrid.com/v3/mail/send',
             method: 'POST',
             headers: headers,
-            body: JSON.stringify(dataString)
+            body: getBodyFor(mailMessage)
         };
         request(options, (err, res) => {
             callback({
