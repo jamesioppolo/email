@@ -2,21 +2,8 @@ const sendgrid = require("../MailingSystems/sendgrid");
 const mailgun = require("../MailingSystems/mailgun");
 
 module.exports = {
-    send: (body, callback) => {
-        const mailMessage = {
-            from: body.from,
-            to: body.recipients,
-            subject: body.subject,
-            text: body.message
-        };
-        if (body.cc && body.cc != '') {
-            mailMessage.cc = body.cc;
-        }
-        if (body.bcc && body.bcc != '') {
-            mailMessage.bcc = body.bcc;
-        }
-
-        let client1 = sendgrid;
+    send: (mailMessage, callback) => {
+        let client1 = mailgun;
         let client2 = mailgun;
         client1.send(mailMessage, (client1Response) => {
             if (client1Response.statusCode === 200) {
