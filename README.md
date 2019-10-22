@@ -1,5 +1,5 @@
-# Email
-Email application sends an email using the SendGrid system using the MailGun system as a failover. The RESTful API endpoint requires a body to be sent with x-www-form-urlencoding containing the following key value pairs.
+# Email handler
+This email handler application sends an email using the SendGrid system using the MailGun system as a failover. The RESTful API endpoint requires a body to be sent with x-www-form-urlencoding containing the following key value pairs.
 
 | Key | Value |
 |---|---|
@@ -31,3 +31,9 @@ A cURL request can be performed to test the /email endpoint as follows
   -H 'User-Agent: PostmanRuntime/7.18.0' \
   -H 'cache-control: no-cache' \
   -d 'recipients=james.ioppolo%40gmail.com&cc=&bcc=&subject=subject&message=test%20message&from=james.ioppolo%40gmail.com'`
+
+## Tests
+
+Execute the following command to run the unit tests in the project
+
+`npm run test`
