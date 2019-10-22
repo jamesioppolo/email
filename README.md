@@ -3,9 +3,9 @@ Email application sends an email from the
 
 | Parameter  | Value  |
 |---|---|
-|   |   |
-|   |   |
-|   |   |
+| recipients   | comma separated list of emails   |
+| cc  | comma separated list of email recipients  |
+| bcc  | comma separated list of email recipients  |
 
 ## Endpoint
 A cURL request can be performed to test the /email endpoint as follows 
