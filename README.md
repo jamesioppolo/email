@@ -1,11 +1,15 @@
 # Email
-Email application sends an email from the 
+Email application sends an email using the SendGrid system using the MailGun system as a failover. The RESTful API endpoint requires a body to be sent with x-www-form-urlencoding containing the following key value pairs.
 
-| Parameter  | Value  |
+| Key | Value |
 |---|---|
+| from | email address  |
 | recipients   | comma separated list of emails   |
-| cc  | comma separated list of email recipients  |
-| bcc  | comma separated list of email recipients  |
+| cc  | comma separated list of emails  |
+| bcc  | comma separated list of emails  |
+| subject  | text string  |
+| message | text string |
+
 
 ## Endpoint
 A cURL request can be performed to test the /email endpoint as follows 
