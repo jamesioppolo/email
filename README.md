@@ -1,5 +1,5 @@
 # Email handler
-This email handler application sends an email using the SendGrid system using the MailGun system as a failover. The RESTful API endpoint requires a body to be sent with x-www-form-urlencoding containing the following key value pairs.
+This email handler application sends an email using the SendGrid system using the MailGun system as a failover. The RESTful API endpoint requires a body to be sent with the following key value pairs using `x-www-form-urlencoding`.
 
 | Key | Value |
 |---|---|
