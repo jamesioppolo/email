@@ -11,15 +11,11 @@ module.exports = {
             } else {
                 client2.send(mailMessage, (client2Response) => {
                     if (client2Response.statusCode === 200) {
-                        callback({
-                            client1Response,
-                            client2Response
-                        });
+                        client2Response.previousResponse = client1Response;
+                        callback(client2Response);
                     } else {
-                        callback({
-                            client1Response,
-                            client2Response
-                        });
+                        client2Response.previousResponse = client1Response;
+                        callback(client2Response);
                     }
                 });
             }

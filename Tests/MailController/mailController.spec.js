@@ -41,7 +41,7 @@ describe('Mail Controller', () => {
         });
     });
 
-    it('returns two error messages when both sendGrid and mailGun are down', () => {
+    it('returns both error messages when both sendGrid and mailGun are down', () => {
         sinon.stub(sendgrid, 'send').callsFake((body, callback) => {
             callback({statusCode: 500, message: 'bad code from sendGrid'});
         });
@@ -49,10 +49,10 @@ describe('Mail Controller', () => {
             callback({statusCode: 500, message: 'bad code from mailgun'});
         });
         mailController.send(mailMessage, (response) => {
-            assert.equal(response.client1Response.statusCode, 500);
-            assert.equal(response.client1Response.message, 'bad code from sendGrid');
-            assert.equal(response.client2Response.statusCode, 500);
-            assert.equal(response.client2Response.message, 'bad code from mailgun');
+            console.log(response);
+            assert.equal(response.statusCode, 500);
+            assert.equal(response.message, 'bad code from mailgun');
+            assert.equal(response.previousResponse.message, 'bad code from sendGrid');
         });
     });
 });
