@@ -30,7 +30,8 @@ Perform a git clone in a remote server and enter the following command to execut
 ## Endpoint
 A cURL request can be performed to test the /email endpoint as follows 
 
-`curl -X POST \
+```
+curl -X POST \
   http://138.68.247.201:8080/email \
   -H 'Accept: */*' \
   -H 'Accept-Encoding: gzip, deflate' \
@@ -43,6 +44,7 @@ A cURL request can be performed to test the /email endpoint as follows
   -H 'User-Agent: PostmanRuntime/7.18.0' \
   -H 'cache-control: no-cache' \
   -d 'recipients=james.ioppolo%40gmail.com&cc=&bcc=&subject=subject&message=test%20message&from=james.ioppolo%40gmail.com'`
+```
 
 ## Tests
 
