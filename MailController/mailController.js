@@ -14,13 +14,8 @@ module.exports = {
                 callback(client1Response);        
             } else {
                 client2.send(mailMessage, (client2Response) => {
-                    if (isResponseOk(client2Response.statusCode)) {
-                        client2Response.previousResponse = client1Response;
-                        callback(client2Response);
-                    } else {
-                        client2Response.previousResponse = client1Response;
-                        callback(client2Response);
-                    }
+                     client2Response.previousResponse = client1Response;
+                     callback(client2Response);
                 });
             }
         });

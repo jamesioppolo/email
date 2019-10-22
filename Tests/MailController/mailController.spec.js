@@ -49,7 +49,6 @@ describe('Mail Controller', () => {
             callback({statusCode: 500, message: 'bad code from mailgun'});
         });
         mailController.send(mailMessage, (response) => {
-            console.log(response);
             assert.equal(response.statusCode, 500);
             assert.equal(response.message, 'bad code from mailgun');
             assert.equal(response.previousResponse.message, 'bad code from sendGrid');

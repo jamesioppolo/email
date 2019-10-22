@@ -37,18 +37,13 @@ module.exports = {
             form: form,
             method: 'POST'
         }
-        request.post(options, (err, res) => {          
-            if (!err && res.statusCode === 200) {
-                callback({
-                    statusCode: res.statusCode,
-                    message: res.body
-                });
-            } else {
-                callback({
-                    statusCode: res.statusCode,
-                    message: `MailGun error: ${err}`
-                });
-            }
+        request.post(options, (err, res) => {     
+            callback({
+                system: "MailGun",
+                statusCode: res.statusCode,
+                message: res.body,
+                error: err
+            });
         });
     }
         

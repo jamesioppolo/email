@@ -14,11 +14,7 @@ var server = app.listen(PORT, () => {
 
 app.post('/email', async (req, res) => {
     mailController.send(req.body, (response) => {
-        if (response.statusCode === 200) {
-            res.send(response);        
-        } else {
-            res.status(response.statusCode).send(response.message);
-        }
+        res.status(response.statusCode).send(response);
     });
 });
 

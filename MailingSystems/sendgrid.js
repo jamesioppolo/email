@@ -51,24 +51,13 @@ module.exports = {
             headers: headers,
             body: JSON.stringify(dataString)
         };
-        request(options, (err, res, body) => {
-            if (!err && res.statusCode === 200 || res.statusCode === 202) {
-                callback({
-                    statusCode: res.statusCode,
-                    message: {
-                        system: 'Sendgrid',
-                        response: res
-                    }
-                });
-            } else {
-                callback({
-                    statusCode: res.statusCode,
-                    message: {
-                        system: 'Sendgrid',
-                        response: err
-                    }
-                });
-            }
+        request(options, (err, res) => {
+            callback({
+                system: 'SendGrid',
+                statusCode: res.statusCode,
+                response: res.headers,
+                error: err
+            });
         });
     }
 };
