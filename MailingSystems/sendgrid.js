@@ -17,28 +17,17 @@ function getPersonalizationsFor(mailAddresses) {
 
 module.exports = {
     send: (mailMessage, callback) => {
-        // var data = {
-        //     'personalizations': [
-        //         {
-        //             'to': getPersonalizationsFor(mailMessage.to),
-        //         }
-        //     ],
-        //     'from': {
-        //         'email': mailMessage.from
-        //     },
-        //     'subject': mailMessage.subject,
-        //     'content': [
-        //         {
-        //             'type': 'text/plain',
-        //             'value': mailMessage.text
-        //         }
-        //     ]
-        // };
         var dataString = {
             "personalizations": [
-                { "to": getPersonalizationsFor(mailMessage.to) },
-                { "cc": getPersonalizationsFor(mailMessage.cc) },
-                { "bcc": getPersonalizationsFor(mailMessage.bcc) },
+                { 
+                    "to": getPersonalizationsFor(mailMessage.to) 
+                },
+                { 
+                    "cc": getPersonalizationsFor(mailMessage.cc) 
+                },
+                { 
+                    "bcc": getPersonalizationsFor(mailMessage.bcc) 
+                },
             ],
             "from": {
                 "email": mailMessage.from
