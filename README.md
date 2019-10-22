@@ -4,9 +4,9 @@ This email handler application sends an email using the SendGrid system using th
 | Key | Value |
 |---|---|
 | from | email address  |
-| to   | comma separated list of emails   |
-| cc  | comma separated list of emails  |
-| bcc  | comma separated list of emails  |
+| to   | comma separated list of email addresses   |
+| cc  | comma separated list of email addresses |
+| bcc  | comma separated list of email addresses |
 | subject  | text string  |
 | text | text string |
 
