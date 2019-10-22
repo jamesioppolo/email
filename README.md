@@ -28,7 +28,7 @@ Perform a `git clone` and `npm install` in a remote server and enter the followi
 `npm run start`
 
 ## Endpoint
-A cURL request can be performed to test the /email endpoint as follows 
+A cURL request can be performed to test the `/email` endpoint as follows 
 
 ```
 curl -X POST \
