@@ -21,13 +21,7 @@ module.exports = {
             "personalizations": [
                 { 
                     "to": getPersonalizationsFor(mailMessage.to) 
-                },
-                { 
-                    "cc": getPersonalizationsFor(mailMessage.cc) 
-                },
-                { 
-                    "bcc": getPersonalizationsFor(mailMessage.bcc) 
-                },
+                }
             ],
             "from": {
                 "email": mailMessage.from
@@ -40,6 +34,13 @@ module.exports = {
                 }
             ]
         };
+        if (mailMessage.cc && mailMessage.cc !== "") {
+            dataString.personalizations.cc = getPersonalizationsFor(mailMessage.cc);
+        }
+        if (mailMessage.bcc && mailMessage.bcc !== "") {
+            dataString.personalizations.bcc = getPersonalizationsFor(mailMessage.bcc);
+        }
+
         var headers = {
             'Authorization': `Bearer ${process.env.SENDGRID_API_KEY}`,
             'Content-Type': 'application/json'
@@ -51,9 +52,9 @@ module.exports = {
             body: JSON.stringify(dataString)
         };
         request(options, (err, res, body) => {
-            if (!err && res.statusCode === 200) {
+            if (!err && res.statusCode === 200 || res.statusCode === 202) {
                 callback({
-                    statusCode: 200,
+                    statusCode: res.statusCode,
                     message: {
                         system: 'Sendgrid',
                         response: res
@@ -64,7 +65,7 @@ module.exports = {
                     statusCode: res.statusCode,
                     message: {
                         system: 'Sendgrid',
-                        response: res
+                        response: err
                     }
                 });
             }
