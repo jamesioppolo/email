@@ -11,7 +11,10 @@ module.exports = {
             } else {
                 client2.send(mailMessage, (client2Response) => {
                     if (client2Response.statusCode === 200) {
-                        callback(client2Response);
+                        callback({
+                            client1Response,
+                            client2Response
+                        });
                     } else {
                         callback({
                             client1Response,
