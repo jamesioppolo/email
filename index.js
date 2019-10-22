@@ -8,7 +8,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 const mailController = require('./MailController/mailController');
 
-app.listen(PORT, () => {
+var server = app.listen(PORT, () => {
  console.log(`Server is listening on port: ${PORT}`);
 });
 
@@ -22,4 +22,4 @@ app.post('/email', async (req, res) => {
     });
 });
 
-module.exports = app;
+module.exports = server;

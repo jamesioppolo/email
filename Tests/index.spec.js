@@ -1,15 +1,17 @@
-let chai = require('chai');
-let chaiHttp = require('chai-http');
+const chai = require('chai');
+const chaiHttp = require('chai-http');
 chai.use(chaiHttp);
-let app = require('./index');
-let sinon = require('sinon');
-var assert = require('assert');
-const mailController = require('./MailController/mailController');
+const server = require('../index');
+const sinon = require('sinon');
+const assert = require('assert');
+const mailController = require('../MailController/mailController');
 
 describe('email route', () => {
 
-    afterEach(() => {
+    afterEach((done) => {
         sinon.restore();
+        server.close();
+        done();
     });
 
     it('sends email OK', (done) => {
@@ -22,7 +24,7 @@ describe('email route', () => {
         const email = {
             recipients: 'abc123@mail.com'
         }
-        chai.request(app)
+        chai.request(server)
             .post('/email')
             .send(email)
             .end((err, res) => {
@@ -41,7 +43,7 @@ describe('email route', () => {
         const email = {
             recipients: 'abc123@mail.com'
         }
-        chai.request(app)
+        chai.request(server)
             .post('/email')
             .send(email)
             .end((err, res) => {

@@ -1,5 +1,5 @@
-const mailgun = require("../MailingSystems/mailgun");
 const sendgrid = require("../MailingSystems/sendgrid");
+const mailgun = require("../MailingSystems/mailgun");
 
 module.exports = {
     send: (body, callback) => {

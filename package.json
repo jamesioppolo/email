@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "test": "mocha ./Tests/**/*.spec.js",
     "deploy": "fargatecli"
   },
   "keywords": [],
