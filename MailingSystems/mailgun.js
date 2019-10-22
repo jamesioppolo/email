@@ -15,18 +15,22 @@ function addFormDataFrom(mailList, type, form) {
     return form;
 }
 
+function getFormFor(mailMessage) {
+    var form = {
+        'from': mailMessage.from,
+        'subject': mailMessage.subject,
+        'text': mailMessage.text
+    };
+
+    form = addFormDataFrom(mailMessage.to, 'to', form);
+    form = addFormDataFrom(mailMessage.cc, 'cc', form);
+    form = addFormDataFrom(mailMessage.bcc, 'bcc', form);
+    
+    return form;
+}
+
 module.exports = {
     send: (mailMessage, callback) => {
-
-        var form = {
-            'from': mailMessage.from,
-            'subject': mailMessage.subject,
-            'text': mailMessage.text
-        };
-
-        form = addFormDataFrom(mailMessage.to, 'to', form);
-        form = addFormDataFrom(mailMessage.cc, 'cc', form);
-        form = addFormDataFrom(mailMessage.bcc, 'bcc', form);
 
         const options = {
             url: `https://api.mailgun.net/v3/${process.env.MAILGUN_DOMAIN}/messages`,
@@ -34,9 +38,10 @@ module.exports = {
                 'user': 'api',
                 'pass': process.env.MAILGUN_API_KEY
             },
-            form: form,
+            form: getFormFor(mailMessage),
             method: 'POST'
         }
+        
         request.post(options, (err, res) => {     
             callback({
                 system: "MailGun",
@@ -45,6 +50,5 @@ module.exports = {
                 error: err
             });
         });
-    }
-        
+    }        
 };
