@@ -1,28 +1,55 @@
-const mailgun = require("mailgun-js");
-const DOMAIN = 'sandbox319d2c2bcf8b4fcc8348836ddfb5d9d2.mailgun.org';
-const mg = mailgun({apiKey: 'd0acd922f8e5b832cc844dcf503cb3c1-9c988ee3-0a6f7ecb', domain: DOMAIN});
+const request = require('request');
+const emailValidator = require("email-validator");
 
-module.exports = {
-    send: (mailMessage, callback)  => {
-        if (mailMessage.cc === "") {
-            mailMessage.cc = null;
-        }   
-        mg.messages().send(mailMessage, function (error, response) {
-            if (error) {
-                callback({
-                    statusCode: 500,
-                    message: 'Mailgun ' + error
-                });
-                
-            } else {
-                callback({ 
-                    statusCode: 200, 
-                    message: {
-                        system: 'Mailgun',
-                        response: response
-                    }
-                });
-            }                   
+function addFormDataFrom(mailList, type, form) {
+    form[type] = [];
+    if (mailList) {
+        const mailAddresses = mailList.split(',');
+        mailAddresses.forEach(mailAddress => {
+            const trimmedMailAddress = mailAddress.trim();
+            if (emailValidator.validate(trimmedMailAddress)) {
+                form[type].push(trimmedMailAddress);
+            } 
         });
     }
+    return form;
+}
+
+module.exports = {
+    send: (mailMessage, callback) => {
+
+        var form = {
+            'from': mailMessage.from,
+            'subject': mailMessage.subject,
+            'text': mailMessage.text
+        };
+
+        form = addFormDataFrom(mailMessage.to, 'to', form);
+        form = addFormDataFrom(mailMessage.cc, 'cc', form);
+        form = addFormDataFrom(mailMessage.bcc, 'bcc', form);
+
+        const options = {
+            url: `https://api.mailgun.net/v3/${process.env.MAILGUN_DOMAIN}/messages`,
+            auth: {
+                'user': 'api',
+                'pass': process.env.MAILGUN_API_KEY
+            },
+            form: form,
+            method: 'POST'
+        }
+        request.post(options, (err, res) => {               
+            if (!err && res.statusCode === 200) {
+                callback({
+                    statusCode: res.statusCode,
+                    message: res.body
+                });
+            } else {
+                callback({
+                    statusCode: res.statusCode,
+                    message: `MailGun error: ${err}`
+                });
+            }
+        });
+    }
+        
 };
