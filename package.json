@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha ./Tests/**/*.spec.js",
+    "start": "node index.js",
+    "test": "mocha ./Tests/*.spec.js ./Tests/**/*.spec.js",
     "deploy": "fargatecli"
   },
   "keywords": [],
