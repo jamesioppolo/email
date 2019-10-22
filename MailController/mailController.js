@@ -3,7 +3,7 @@ const mailgun = require("../MailingSystems/mailgun");
 
 module.exports = {
     send: (mailMessage, callback) => {
-        let client1 = mailgun;
+        let client1 = sendgrid;
         let client2 = mailgun;
         client1.send(mailMessage, (client1Response) => {
             if (client1Response.statusCode === 200) {
