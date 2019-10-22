@@ -10,6 +10,10 @@ Email application sends an email using the SendGrid system using the MailGun sys
 | subject  | text string  |
 | message | text string |
 
+## Install and Setup
+Perform a git clone in a remote server and enter the following command to execute the node.js listener so that it can respond to API requests
+
+`node index.js`
 
 ## Endpoint
 A cURL request can be performed to test the /email endpoint as follows 
