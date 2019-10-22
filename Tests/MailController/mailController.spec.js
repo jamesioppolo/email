@@ -1,6 +1,6 @@
 const mailController = require('../../MailController/mailController');
-const sendgrid = require("../../MailingSystems/sendgrid");
-const mailgun = require("../../MailingSystems/mailgun");
+const sendgrid = require('../../MailingSystems/sendgrid');
+const mailgun = require('../../MailingSystems/mailgun');
 const sinon = require('sinon');
 const assert = require('assert');
 
