@@ -13,7 +13,7 @@ This email handler application sends an email using the SendGrid system using th
 ## Install and Setup
 
 ### Mail configuration
-It is necessary to have an `.env` file containing various API keys for the SendGrid and Mailgun packages, as shown below
+It is necessary to have an `.env` file containing various API keys for the SendGrid and Mailgun packages, as shown below. This file is not added to source control and is required to be manually created in a test environment and in production
 
 
 ```
