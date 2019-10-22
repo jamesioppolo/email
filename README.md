@@ -1,5 +1,11 @@
 # Email
-email application 
+Email application sends an email from the 
+
+|   |   |   |   |   |
+|---|---|---|---|---|
+|   |   |   |   |   |
+|   |   |   |   |   |
+|   |   |   |   |   |
 
 ## Endpoint
 A cURL request can be performed to test the /email endpoint as follows 
