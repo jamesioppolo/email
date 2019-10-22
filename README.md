@@ -11,6 +11,15 @@ This email handler application sends an email using the SendGrid system using th
 | text | text string |
 
 ## Install and Setup
+
+### Mail configuration
+It is necessary to have an `.env` file containing various API keys for the SendGrid and Mailgun packages, as shown below
+
+`MAILGUN_DOMAIN = <mailgun-domain>`
+`MAILGUN_API_KEY = <mailgun-api-key>`
+`SENDGRID_API_KEY = <send-grid-api-key>`
+
+### Server startup
 Perform a git clone in a remote server and enter the following command to execute the node.js listener so that it can respond to API requests
 
 `node index.js`
