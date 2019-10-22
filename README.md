@@ -18,7 +18,8 @@ It is necessary to have an `.env` file containing various API keys for the SendG
 
 ```MAILGUN_DOMAIN = <mailgun-domain>
 MAILGUN_API_KEY = <mailgun-api-key>
-SENDGRID_API_KEY = <send-grid-api-key>```
+SENDGRID_API_KEY = <send-grid-api-key>
+```
 
 ### Server startup
 Perform a git clone in a remote server and enter the following command to execute the node.js listener so that it can respond to API requests
