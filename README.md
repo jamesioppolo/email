@@ -16,7 +16,8 @@ This email handler application sends an email using the SendGrid system using th
 It is necessary to have an `.env` file containing various API keys for the SendGrid and Mailgun packages, as shown below
 
 
-```MAILGUN_DOMAIN = <mailgun-domain>
+```
+MAILGUN_DOMAIN = <mailgun-domain>
 MAILGUN_API_KEY = <mailgun-api-key>
 SENDGRID_API_KEY = <send-grid-api-key>
 ```
