@@ -25,7 +25,7 @@ SENDGRID_API_KEY = <send-grid-api-key>
 ### Server startup
 Perform a `git clone` and `npm install` in a remote server and enter the following command to execute the node.js listener so that it can respond to API requests
 
-`node index.js`
+`npm run start`
 
 ## Endpoint
 A cURL request can be performed to test the /email endpoint as follows 
