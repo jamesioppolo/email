@@ -4,11 +4,11 @@ This email handler application sends an email using the SendGrid system using th
 | Key | Value |
 |---|---|
 | from | email address  |
-| recipients   | comma separated list of emails   |
+| to   | comma separated list of emails   |
 | cc  | comma separated list of emails  |
 | bcc  | comma separated list of emails  |
 | subject  | text string  |
-| message | text string |
+| text | text string |
 
 ## Install and Setup
 Perform a git clone in a remote server and enter the following command to execute the node.js listener so that it can respond to API requests
