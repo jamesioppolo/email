@@ -6,7 +6,7 @@ const sinon = require('sinon');
 const assert = require('assert');
 const mailController = require('../MailController/mailController');
 
-describe('email route', () => {
+describe('Email system', () => {
 
     afterEach((done) => {
         sinon.restore();
@@ -14,7 +14,7 @@ describe('email route', () => {
         done();
     });
 
-    it('sends email OK', (done) => {
+    it('sends return code when email(s) are sent OK', (done) => {
         sinon.stub(mailController, 'send').callsFake((body, callback) => {
             callback({
                 statusCode: 200,
@@ -33,7 +33,7 @@ describe('email route', () => {
             });
     });
 
-    it('sends fail code', (done) => {
+    it('sends fail code when any errors occur', (done) => {
         sinon.stub(mailController, 'send').callsFake((body, callback) => {
             callback({
                 statusCode: 500,
