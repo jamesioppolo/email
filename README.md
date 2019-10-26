@@ -14,7 +14,9 @@ This email handler application sends an email using the SendGrid system using th
 
 ## Validation
 
-The appliation will return a 400 status code if any of the required parameters of `to`, `subject`, `text` and `from` are missing. The application will also return a 400 status code if the `to`, `cc` or `bcc` paramaters are not valid arrays of email addresses. The application uses the [validator](https://www.npmjs.com/package/validator) npm package.
+* The API will return a 400 status code if any of the required parameters of `to`, `subject`, `text` and `from` are missing.
+* The API will return a 400 status code if the `to`, `cc` or `bcc` paramaters are not valid arrays of email addresses.
+* The API uses the [validator](https://www.npmjs.com/package/validator) npm package to confirm valid email structure
 
 ## Error handling
 
