@@ -4,8 +4,7 @@ const emailValidator = require("email-validator");
 function addFormDataFrom(mailList, type, form) {
     form[type] = [];
     if (mailList) {
-        const mailAddresses = mailList.split(',');
-        mailAddresses.forEach(mailAddress => {
+        mailList.forEach(mailAddress => {
             const trimmedMailAddress = mailAddress.trim();
             if (emailValidator.validate(trimmedMailAddress)) {
                 form[type].push(trimmedMailAddress);

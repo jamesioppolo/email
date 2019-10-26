@@ -4,8 +4,7 @@ const emailValidator = require("email-validator");
 function getPersonalizationsFor(mailAddresses) {
     var emailList = [];
     if (mailAddresses) {
-        var mailAddressStrings = mailAddresses.split(',');
-        mailAddressStrings.forEach(mailAddress => {
+        mailAddresses.forEach(mailAddress => {
             var croppedMailAddress = mailAddress.trim();
             if (emailValidator.validate(croppedMailAddress)) {
                 emailList.push({ 'email': croppedMailAddress });

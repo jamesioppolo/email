@@ -1,15 +1,12 @@
 require('dotenv').config();
 const express = require('express');
-const PORT = 8080;
-const app = express();
-const bodyParser = require('body-parser');
-app.use(bodyParser.json()); // support json encoded bodies
-
-
 const mailController = require('./services/mailController');
 
-var server = app.listen(PORT, () => {
- console.log(`Server is listening on port: ${PORT}`);
+const app = express();
+app.use(express.json());
+
+var server = app.listen(process.env.PORT, () => {
+ console.log(`Server is listening on port: ${process.env.PORT}`);
 });
 
 app.post('/email', async (req, res) => {
