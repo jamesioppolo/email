@@ -4,7 +4,7 @@ chai.use(chaiHttp);
 const server = require('../index');
 const sinon = require('sinon');
 const assert = require('assert');
-const mailController = require('../services/mailController');
+const MailController = require('../services/mailController');
 
 describe('Email system', () => {
 
@@ -15,7 +15,7 @@ describe('Email system', () => {
     });
 
     it('sends return code when email(s) are sent OK', (done) => {
-        sinon.stub(mailController, 'send').callsFake((body, callback) => {
+        sinon.stub(MailController.prototype, 'send').callsFake((body, callback) => {
             callback({
                 statusCode: 200,
                 message: 'ok'
@@ -34,7 +34,7 @@ describe('Email system', () => {
     });
 
     it('sends fail code when any errors occur', (done) => {
-        sinon.stub(mailController, 'send').callsFake((body, callback) => {
+        sinon.stub(MailController.prototype, 'send').callsFake((body, callback) => {
             callback({
                 statusCode: 500,
                 message: 'bad request'

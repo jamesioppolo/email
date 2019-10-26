@@ -3,12 +3,12 @@ const mailgun = require("../services/mailgun");
 const EmailValidator  = require('../services/emailValidator');
 var emailValidator = new EmailValidator;
 
-function isResponseOk(statusCode) {
-    return statusCode === 200 || statusCode === 202;
-}
+class MailController {  
+    isResponseOk(statusCode) {
+        return statusCode === 200 || statusCode === 202;
+    }
 
-module.exports = {
-    send: (mailMessage, callback) => {
+    send(mailMessage, callback) {
         const mailMessageValidity = emailValidator.validity(mailMessage);
         if (!mailMessageValidity.isValid) {
             callback({
@@ -19,7 +19,7 @@ module.exports = {
             let client1 = sendgrid;
             let client2 = mailgun;
             client1.send(mailMessage, (client1Response) => {
-                if (isResponseOk(client1Response.statusCode)) {
+                if (this.isResponseOk(client1Response.statusCode)) {
                     callback(client1Response);        
                 } else {
                     client2.send(mailMessage, (client2Response) => {
@@ -30,4 +30,6 @@ module.exports = {
             });
         }
     }
-};
+}
+
+module.exports = MailController;

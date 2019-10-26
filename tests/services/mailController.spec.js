@@ -1,4 +1,5 @@
-const mailController = require('../../services/mailController');
+const MailController = require('../../services/mailController');
+var mailController = new MailController();
 const sendgrid = require("../../services/sendgrid");
 const mailgun = require("../../services/mailgun");
 const sinon = require('sinon');
