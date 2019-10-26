@@ -1,5 +1,5 @@
 # Email handler
-This email handler application sends an email using the SendGrid system using the MailGun system as a failover. The RESTful API endpoint requires a body to be sent with the following json structure
+This email handler application sends an email using the SendGrid system using the MailGun system as a failover. The RESTful API endpoint requires a body to be sent with the following json structure. The `cc` and `bcc` fields ae optional. All other fields are required
 
 ```
 {
@@ -11,6 +11,14 @@ This email handler application sends an email using the SendGrid system using th
 	"from": <string>
 }
 ```
+
+## Validation
+
+The appliation will return a 400 status code if any of the required parameters of `to`, `subject`, `text` and `from` are missing. The application will also return a 400 status code if the `to`, `cc` or `bcc` paramaters are not valid arrays of email addresses. The application uses the [validator](https://www.npmjs.com/package/validator) npm package.
+
+## Error handling
+
+The application checks for an invalid JSON body using a custom express.js middleware function that checks for a 400 error status on every request.
 
 ## Install and Setup
 
