@@ -22,7 +22,7 @@ describe('Email system', () => {
             });
         });
         const email = {
-            recipients: 'abc123@mail.com'
+            to: 'abc123@mail.com'
         }
         chai.request(server)
             .post('/email')
@@ -41,7 +41,7 @@ describe('Email system', () => {
             });
         });
         const email = {
-            recipients: 'abc123@mail.com'
+            to: 'abc123@mail.com'
         }
         chai.request(server)
             .post('/email')
