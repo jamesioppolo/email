@@ -1,5 +1,7 @@
-const sendgrid = require("../services/sendgrid");
-const mailgun = require("../services/mailgun");
+const Sendgrid = require("../services/sendgrid");
+var sendgrid = new Sendgrid;
+const Mailgun = require("../services/mailgun");
+var mailgun = new Mailgun;
 const EmailValidator  = require('../services/emailValidator');
 var emailValidator = new EmailValidator;
 

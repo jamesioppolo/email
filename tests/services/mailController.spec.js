@@ -1,7 +1,7 @@
 const MailController = require('../../services/mailController');
 var mailController = new MailController();
-const sendgrid = require("../../services/sendgrid");
-const mailgun = require("../../services/mailgun");
+const Sendgrid = require("../../services/sendgrid");
+const Mailgun = require("../../services/mailgun");
 const sinon = require('sinon');
 const assert = require('assert');
 
@@ -19,7 +19,7 @@ describe('Mail Controller', () => {
     });
 
     it('calls sendgrid first', () => {
-        sinon.stub(sendgrid, 'send').callsFake((body, callback) => {
+        sinon.stub(Sendgrid.prototype, 'send').callsFake((body, callback) => {
             callback({statusCode: 200, message: 'ok from sendGrid'});
         });
 
@@ -30,10 +30,10 @@ describe('Mail Controller', () => {
     });
 
     it('fails over from sendGrid to mailGun', () => {
-        sinon.stub(sendgrid, 'send').callsFake((body, callback) => {
+        sinon.stub(Sendgrid.prototype, 'send').callsFake((body, callback) => {
             callback({statusCode: 500, message: 'bad code from sendGrid'});
         });
-        sinon.stub(mailgun, 'send').callsFake((body, callback) => {
+        sinon.stub(Mailgun.prototype, 'send').callsFake((body, callback) => {
             callback({statusCode: 200, message: 'ok from mailgun'});
         });
         mailController.send(mailMessage, (response) => {
@@ -43,10 +43,10 @@ describe('Mail Controller', () => {
     });
 
     it('returns both error messages when both sendGrid and mailGun are down', () => {
-        sinon.stub(sendgrid, 'send').callsFake((body, callback) => {
+        sinon.stub(Sendgrid.prototype, 'send').callsFake((body, callback) => {
             callback({statusCode: 500, message: 'bad code from sendGrid'});
         });
-        sinon.stub(mailgun, 'send').callsFake((body, callback) => {
+        sinon.stub(Mailgun.prototype, 'send').callsFake((body, callback) => {
             callback({statusCode: 500, message: 'bad code from mailgun'});
         });
         mailController.send(mailMessage, (response) => {

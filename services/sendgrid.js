@@ -1,21 +1,22 @@
 const request = require('request');
 
-function getPersonalizationsFor(mailAddresses) {
-    var emailList = [];
-    if (mailAddresses) {
-        mailAddresses.forEach(mailAddress => {
-            emailList.push({ 'email': mailAddress });
-        });
-    }
-    return emailList;
-}
+class Sendgrid {
 
-module.exports = {
-    send: (mailMessage, callback) => {
+    getPersonalizationsFor(mailAddresses) {
+        var emailList = [];
+        if (mailAddresses) {
+            mailAddresses.forEach(mailAddress => {
+                emailList.push({ 'email': mailAddress });
+            });
+        }
+        return emailList;
+    }
+
+    send(mailMessage, callback) {
         var dataString = {
             "personalizations": [
                 { 
-                    "to": getPersonalizationsFor(mailMessage.to) 
+                    "to": this.getPersonalizationsFor(mailMessage.to) 
                 }
             ],
             "from": {
@@ -30,10 +31,10 @@ module.exports = {
             ]
         };
         if (mailMessage.cc && mailMessage.cc !== "") {
-            dataString.personalizations.cc = getPersonalizationsFor(mailMessage.cc);
+            dataString.personalizations.cc = this.getPersonalizationsFor(mailMessage.cc);
         }
         if (mailMessage.bcc && mailMessage.bcc !== "") {
-            dataString.personalizations.bcc = getPersonalizationsFor(mailMessage.bcc);
+            dataString.personalizations.bcc = this.getPersonalizationsFor(mailMessage.bcc);
         }
 
         var headers = {
@@ -55,4 +56,7 @@ module.exports = {
             });
         });
     }
-};
+}
+
+
+module.exports = Sendgrid;

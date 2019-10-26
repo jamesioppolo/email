@@ -1,17 +1,18 @@
 const request = require('request');
 
-function addFormDataFrom(mailList, type, form) {
-    form[type] = [];
-    if (mailList) {
-        mailList.forEach(mailAddress => {
-            form[type].push(mailAddress);
-        });
-    }
-    return form;
-}
+class Mailgun {
 
-module.exports = {
-    send: (mailMessage, callback) => {
+    addFormDataFrom(mailList, type, form) {
+        form[type] = [];
+        if (mailList) {
+            mailList.forEach(mailAddress => {
+                form[type].push(mailAddress);
+            });
+        }
+        return form;
+    }
+
+    send(mailMessage, callback) {
 
         var form = {
             'from': mailMessage.from,
@@ -19,9 +20,9 @@ module.exports = {
             'text': mailMessage.text
         };
 
-        form = addFormDataFrom(mailMessage.to, 'to', form);
-        form = addFormDataFrom(mailMessage.cc, 'cc', form);
-        form = addFormDataFrom(mailMessage.bcc, 'bcc', form);
+        form = this.addFormDataFrom(mailMessage.to, 'to', form);
+        form = this.addFormDataFrom(mailMessage.cc, 'cc', form);
+        form = this.addFormDataFrom(mailMessage.bcc, 'bcc', form);
 
         const options = {
             url: `https://api.mailgun.net/v3/${process.env.MAILGUN_DOMAIN}/messages`,
@@ -41,5 +42,6 @@ module.exports = {
             });
         });
     }
-        
-};
+}
+
+module.exports = Mailgun;
