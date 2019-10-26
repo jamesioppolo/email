@@ -1,14 +1,16 @@
 # Email handler
-This email handler application sends an email using the SendGrid system using the MailGun system as a failover. The RESTful API endpoint requires a body to be sent with the following key value pairs using `x-www-form-urlencoding`.
+This email handler application sends an email using the SendGrid system using the MailGun system as a failover. The RESTful API endpoint requires a body to be sent with the following json structure
 
-| Key | Value |
-|---|---|
-| from | email address  |
-| to   | comma separated list of email addresses   |
-| cc  | comma separated list of email addresses |
-| bcc  | comma separated list of email addresses |
-| subject  | text string  |
-| text | text string |
+```
+{
+	"to": [<string>, <string>, ...],
+	"cc": [<string>, <string>, ...],
+	"bcc": [<string>, <string>, ...],
+	"subject": <string>,
+	"text": <string>,
+	"from": <string>
+}
+```
 
 ## Install and Setup
 
@@ -32,18 +34,25 @@ A cURL request can be performed to test the `/email` endpoint as follows
 
 ```
 curl -X POST \
-  http://138.68.247.201:8080/email \
+  http://localhost:8080/email \
   -H 'Accept: */*' \
   -H 'Accept-Encoding: gzip, deflate' \
   -H 'Cache-Control: no-cache' \
   -H 'Connection: keep-alive' \
-  -H 'Content-Length: 115' \
-  -H 'Content-Type: application/x-www-form-urlencoded' \
-  -H 'Host: 138.68.247.201:8080' \
-  -H 'Postman-Token: 63dbe408-9917-4e0c-8d75-62bd5c1e373a,9f6a7649-13b7-44fd-b407-f86f4330578e' \
+  -H 'Content-Length: 175' \
+  -H 'Content-Type: application/json' \
+  -H 'Host: localhost:8080' \
+  -H 'Postman-Token: c772241a-7fc9-488b-9ac4-b23c02e1deac,02baf092-1cf0-4522-bcca-1f56aabe1cf2' \
   -H 'User-Agent: PostmanRuntime/7.18.0' \
   -H 'cache-control: no-cache' \
-  -d 'recipients=james.ioppolo%40gmail.com&cc=&bcc=&subject=subject&message=test%20message&from=james.ioppolo%40gmail.com'`
+  -d '{
+	"to": ["james.ioppolo@gmail.com"],
+	"cc": ["james.ioppolo@gmail.com"],
+	"bcc": [],
+	"subject": "subject line",
+	"text": "text message",
+	"from": "james.ioppolo@gmail.com"
+}'
 ```
 
 ## Tests
