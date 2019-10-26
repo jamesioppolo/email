@@ -1,5 +1,5 @@
-const sendgrid = require("../MailingSystems/sendgrid");
-const mailgun = require("../MailingSystems/mailgun");
+const sendgrid = require("../services/sendgrid");
+const mailgun = require("../services/mailgun");
 
 function isResponseOk(statusCode) {
     return statusCode === 200 || statusCode === 202;

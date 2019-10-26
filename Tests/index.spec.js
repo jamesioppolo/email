@@ -4,7 +4,7 @@ chai.use(chaiHttp);
 const server = require('../index');
 const sinon = require('sinon');
 const assert = require('assert');
-const mailController = require('../MailController/mailController');
+const mailController = require('../services/mailController');
 
 describe('Email system', () => {
 
