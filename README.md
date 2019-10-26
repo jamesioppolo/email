@@ -19,6 +19,7 @@ It is necessary to have an `.env` file containing various API keys for the SendG
 
 
 ```
+PORT = 8080
 MAILGUN_DOMAIN = <mailgun-domain>
 MAILGUN_API_KEY = <mailgun-api-key>
 SENDGRID_API_KEY = <send-grid-api-key>
