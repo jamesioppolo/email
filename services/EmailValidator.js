@@ -5,27 +5,31 @@ class EmailValidator {
     validity(mailMessage) {
         if (!mailMessage) {
             return {
-                isValid: false, message: 'Invalid mail message'
+                isValid: false,
+                message: 'Invalid mail message'
             };
         }
 
         // 'to' checks
         if (!mailMessage.to) {
             return {
-                isValid: false, message: 'Missing \'to\' parameter'
+                isValid: false,
+                message: 'Missing \'to\' parameter'
             };
         }
 
         if(mailMessage.to.length === 0) {
             return {
-                isValid: false, message: 'Invalid \'to\' parameter. Should be an array of strings'
+                isValid: false,
+                message: 'Invalid \'to\' parameter. Should be an array of strings'
             };
         }
 
         for (const emailAddress of mailMessage.to) {
             if (!validator.isEmail(emailAddress)) {
                 return {
-                    isValid: false, message: `Invalid email '${emailAddress}' in 'to' parameter list`
+                    isValid: false,
+                    message: `Invalid email '${emailAddress}' in 'to' parameter list`
                 }
             }
         }
@@ -35,7 +39,8 @@ class EmailValidator {
             for (const emailAddress of mailMessage.cc) {
                 if (!validator.isEmail(emailAddress)) {
                     return {
-                        isValid: false, message: `Invalid email '${emailAddress}' in 'cc' parameter list`
+                        isValid: false,
+                        message: `Invalid email '${emailAddress}' in 'cc' parameter list`
                     }
                 }
             }
@@ -46,7 +51,8 @@ class EmailValidator {
             for (const emailAddress of mailMessage.bcc) {
                 if (!validator.isEmail(emailAddress)) {
                     return {
-                        isValid: false, message: `Invalid email '${emailAddress}' in 'bcc' parameter list`
+                        isValid: false,
+                        message: `Invalid email '${emailAddress}' in 'bcc' parameter list`
                     }
                 }
             }
@@ -55,21 +61,24 @@ class EmailValidator {
         // 'from' checks
         if (!mailMessage.from) {
             return {
-                isValid: false, message: 'Missing \'from\' parameter'
+                isValid: false,
+                message: 'Missing \'from\' parameter'
             };
         }
 
         // 'subject' checks
         if (!mailMessage.subject) {
             return {
-                isValid: false, message: 'Missing \'subject\' parameter'
+                isValid: false,
+                message: 'Missing \'subject\' parameter'
             };
         }
 
         // 'text' checks
         if (!mailMessage.text) {
             return {
-                isValid: false, message: 'Missing \'text\' parameter'
+                isValid: false,
+                message: 'Missing \'text\' parameter'
             };
         }
 
