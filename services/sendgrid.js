@@ -12,11 +12,11 @@ class Sendgrid {
         return emailList;
     }
 
-    send(mailMessage, callback) {
+    async send(mailMessage) {
         var dataString = {
             "personalizations": [
-                { 
-                    "to": this.getPersonalizationsFor(mailMessage.to) 
+                {
+                    "to": this.getPersonalizationsFor(mailMessage.to)
                 }
             ],
             "from": {
@@ -25,7 +25,7 @@ class Sendgrid {
             "subject": mailMessage.subject,
             "content": [
                 {
-                    "type": "text/plain", 
+                    "type": "text/plain",
                     "value": mailMessage.text
                 }
             ]
@@ -47,16 +47,16 @@ class Sendgrid {
             headers: headers,
             body: JSON.stringify(dataString)
         };
-        request(options, (err, res) => {
-            callback({
-                system: 'SendGrid',
-                statusCode: res.statusCode,
-                response: res.headers,
-                error: err
+        return await new Promise(resolve => {
+            request(options, (err, res) => {
+                resolve({
+                    statusCode: res.statusCode,
+                    response: res.headers,
+                    error: err
+                });
             });
         });
     }
 }
-
 
 module.exports = Sendgrid;

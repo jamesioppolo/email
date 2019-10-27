@@ -12,7 +12,7 @@ class Mailgun {
         return form;
     }
 
-    send(mailMessage, callback) {
+    async send(mailMessage) {
 
         var form = {
             'from': mailMessage.from,
@@ -33,12 +33,13 @@ class Mailgun {
             form: form,
             method: 'POST'
         }
-        request.post(options, (err, res) => {     
-            callback({
-                system: "MailGun",
-                statusCode: res.statusCode,
-                message: res.body,
-                error: err
+        return await new Promise(resolve => {
+            request.post(options, (err, res) => {
+                resolve({
+                    statusCode: res.statusCode,
+                    message: res.body,
+                    error: err
+                });
             });
         });
     }

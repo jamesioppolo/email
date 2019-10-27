@@ -19,8 +19,8 @@ describe('Mail Controller', () => {
     });
 
     it('calls sendgrid first', () => {
-        sinon.stub(Sendgrid.prototype, 'send').callsFake((body, callback) => {
-            callback({statusCode: 200, message: 'ok from sendGrid'});
+        sinon.stub(Sendgrid.prototype, 'send').callsFake(async body => {
+            return { statusCode: 200, message: 'ok from sendGrid' };
         });
 
         mailController.send(mailMessage, (response) => {
@@ -30,11 +30,11 @@ describe('Mail Controller', () => {
     });
 
     it('fails over from sendGrid to mailGun', () => {
-        sinon.stub(Sendgrid.prototype, 'send').callsFake((body, callback) => {
-            callback({statusCode: 500, message: 'bad code from sendGrid'});
+        sinon.stub(Sendgrid.prototype, 'send').callsFake(async body => {
+            return { statusCode: 500, message: 'bad code from sendGrid' };
         });
-        sinon.stub(Mailgun.prototype, 'send').callsFake((body, callback) => {
-            callback({statusCode: 200, message: 'ok from mailgun'});
+        sinon.stub(Mailgun.prototype, 'send').callsFake(async body => {
+            return { statusCode: 200, message: 'ok from mailgun' };
         });
         mailController.send(mailMessage, (response) => {
             assert.equal(response.statusCode, 200);
@@ -43,11 +43,11 @@ describe('Mail Controller', () => {
     });
 
     it('returns both error messages when both sendGrid and mailGun are down', () => {
-        sinon.stub(Sendgrid.prototype, 'send').callsFake((body, callback) => {
-            callback({statusCode: 500, message: 'bad code from sendGrid'});
+        sinon.stub(Sendgrid.prototype, 'send').callsFake(async body => {
+            return { statusCode: 500, message: 'bad code from sendGrid' };
         });
-        sinon.stub(Mailgun.prototype, 'send').callsFake((body, callback) => {
-            callback({statusCode: 500, message: 'bad code from mailgun'});
+        sinon.stub(Mailgun.prototype, 'send').callsFake(async body => {
+            return { statusCode: 500, message: 'bad code from mailgun' };
         });
         mailController.send(mailMessage, (response) => {
             assert.equal(response.statusCode, 500);
