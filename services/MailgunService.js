@@ -12,6 +12,32 @@ class MailgunService {
         return form;
     }
 
+    getFormData(mailMessage) {
+        var form = {
+            'from': mailMessage.from,
+            'subject': mailMessage.subject,
+            'text': mailMessage.text
+        };
+
+        form = this.addFormDataFrom(mailMessage.to, 'to', form);
+        form = this.addFormDataFrom(mailMessage.cc, 'cc', form);
+        form = this.addFormDataFrom(mailMessage.bcc, 'bcc', form);
+
+        return form;
+    }
+
+    getHttpOptions(mailMessage) {
+        return {
+            url: `https://api.mailgun.net/v3/${process.env.MAILGUN_DOMAIN}/messages`,
+            auth: {
+                'user': 'api',
+                'pass': process.env.MAILGUN_API_KEY
+            },
+            form: this.getFormData(mailMessage),
+            method: 'POST'
+        }
+    }
+
     callMailgun(options) {
         return new Promise(resolve => {
             request.post(options, (err, res) => {
@@ -26,27 +52,9 @@ class MailgunService {
 
     async send(mailMessage) {
 
-        var form = {
-            'from': mailMessage.from,
-            'subject': mailMessage.subject,
-            'text': mailMessage.text
-        };
-
-        form = this.addFormDataFrom(mailMessage.to, 'to', form);
-        form = this.addFormDataFrom(mailMessage.cc, 'cc', form);
-        form = this.addFormDataFrom(mailMessage.bcc, 'bcc', form);
-
-        const options = {
-            url: `https://api.mailgun.net/v3/${process.env.MAILGUN_DOMAIN}/messages`,
-            auth: {
-                'user': 'api',
-                'pass': process.env.MAILGUN_API_KEY
-            },
-            form: form,
-            method: 'POST'
-        }
+        const httpOptions = this.getHttpOptions(mailMessage);
         try {
-            return await this.callMailgun(options);
+            return await this.callMailgun(httpOptions);
         } catch(error) {
             console.log(error); // use cloud logging system instead
             return {
