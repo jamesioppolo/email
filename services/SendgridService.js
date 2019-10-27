@@ -2,6 +2,13 @@ const request = require('request');
 
 class SendgridService {
 
+    getHeaders() {
+        return {
+            'Authorization': `Bearer ${process.env.SENDGRID_API_KEY}`,
+            'Content-Type': 'application/json'
+        }
+    }
+
     getPersonalizationsFor(mailAddresses) {
         var emailList = [];
         if (mailAddresses) {
@@ -12,19 +19,7 @@ class SendgridService {
         return emailList;
     }
 
-    callSendgrid(options) {
-        return new Promise(resolve => {
-            request(options, (err, res) => {
-                resolve({
-                    statusCode: res.statusCode,
-                    response: res.headers,
-                    error: err
-                });
-            });
-        });
-    }
-
-    async send(mailMessage) {
+    getDataString(mailMessage) {
         var dataString = {
             "personalizations": [
                 {
@@ -48,19 +43,34 @@ class SendgridService {
         if (mailMessage.bcc && mailMessage.bcc !== "") {
             dataString.personalizations.bcc = this.getPersonalizationsFor(mailMessage.bcc);
         }
+        return JSON.stringify(dataString);
+    }
 
-        var headers = {
-            'Authorization': `Bearer ${process.env.SENDGRID_API_KEY}`,
-            'Content-Type': 'application/json'
-        };
-        var options = {
+    getHttpOptions(mailMessage) {
+        return {
             url: 'https://api.sendgrid.com/v3/mail/send',
             method: 'POST',
-            headers: headers,
-            body: JSON.stringify(dataString)
+            headers: this.getHeaders(),
+            body: this.getDataString(mailMessage)
         };
+    }
+
+    callSendgrid(options) {
+        return new Promise(resolve => {
+            request(options, (err, res) => {
+                resolve({
+                    statusCode: res.statusCode,
+                    response: res.headers,
+                    error: err
+                });
+            });
+        });
+    }
+
+    async send(mailMessage) {
+        var httpOptions = this.getHttpOptions(mailMessage);
         try {
-            return await this.callSendgrid(options);
+            return await this.callSendgrid(httpOptions);
         } catch(error) {
             console.log(error); // use cloud logging instead
             return {
