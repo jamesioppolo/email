@@ -46,7 +46,6 @@ class EmailValidator {
             }
         }
 
-
         // 'from' checks
         if (!mailMessage.from) {
             return { isValid: false, message: 'Missing \'from\' parameter' };
