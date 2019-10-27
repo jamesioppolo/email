@@ -4,7 +4,7 @@ chai.use(chaiHttp);
 const server = require('../index');
 const sinon = require('sinon');
 const assert = require('assert');
-const mailController = require('../MailController/mailController');
+const MailController = require('../services/MailController');
 
 describe('Email system', () => {
 
@@ -15,14 +15,14 @@ describe('Email system', () => {
     });
 
     it('sends return code when email(s) are sent OK', (done) => {
-        sinon.stub(mailController, 'send').callsFake((body, callback) => {
-            callback({
+        sinon.stub(MailController.prototype, 'send').callsFake(async () => {
+            return {
                 statusCode: 200,
                 message: 'ok'
-            });
+            };
         });
         const email = {
-            recipients: 'abc123@mail.com'
+            to: ['abc123@mail.com']
         }
         chai.request(server)
             .post('/email')
@@ -34,14 +34,14 @@ describe('Email system', () => {
     });
 
     it('sends fail code when any errors occur', (done) => {
-        sinon.stub(mailController, 'send').callsFake((body, callback) => {
-            callback({
+        sinon.stub(MailController.prototype, 'send').callsFake(async () => {
+            return {
                 statusCode: 500,
                 message: 'bad request'
-            });
+            };
         });
         const email = {
-            recipients: 'abc123@mail.com'
+            to: ['abc123@mail.com']
         }
         chai.request(server)
             .post('/email')

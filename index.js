@@ -1,25 +1,33 @@
-
+require('dotenv').config();
 const express = require('express');
-const PORT = 8080;
+const MailController = require('./services/MailController');
+var mailController = new MailController;
+
 const app = express();
-const bodyParser = require('body-parser');
-app.use(bodyParser.json()); // support json encoded bodies
-app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+app.use(express.json());
 
-const mailController = require('./MailController/mailController');
+// check for any bad json
+app.use((err, req, res, next) => {
+    console.error(err);
+    if (err.status === 400) {
+        return res.status(err.status).send(`Invalid JSON: ${err}`);
+    }
+    return next(err);
+});
 
-var server = app.listen(PORT, () => {
- console.log(`Server is listening on port: ${PORT}`);
+var server = app.listen(process.env.PORT, () => {
+    console.log(`Server is listening on port: ${process.env.PORT}`);
 });
 
 app.post('/email', async (req, res) => {
-    mailController.send(req.body, (response) => {
-        if (response.statusCode === 200) {
-            res.send(response);        
-        } else {
-            res.status(response.statusCode).send(response.message);
-        }
-    });
+    try {
+        const response = await mailController.send(req.body);
+        res.status(response.statusCode).send(response);
+    } catch(error) {
+        console.log(error); // use a cloud logging system instead
+        res.status(500).send(error);
+    }
+
 });
 
 module.exports = server;
