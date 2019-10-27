@@ -1,11 +1,11 @@
 {
   "name": "email-handler",
   "version": "1.0.0",
-  "description": "",
+  "description": "Email client API using Sendgrid with a fail over to Mailgun ",
   "main": "index.js",
   "scripts": {
-    "test": "mocha tests/**/*.spec.js tests/*.spec.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "test": "mocha tests/**/*.spec.js tests/*.spec.js"
   },
   "keywords": [],
   "author": "James Ioppolo",
