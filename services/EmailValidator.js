@@ -4,16 +4,22 @@ class EmailValidator {
 
     validity(mailMessage) {
         if (!mailMessage) {
-            return { isValid: false, message: 'Invalid mail message' };
+            return {
+                isValid: false, message: 'Invalid mail message'
+            };
         }
 
         // 'to' checks
         if (!mailMessage.to) {
-            return { isValid: false, message: 'Missing \'to\' parameter' };
+            return {
+                isValid: false, message: 'Missing \'to\' parameter'
+            };
         }
 
         if(mailMessage.to.length === 0) {
-            return { isValid: false, message: 'Invalid \'to\' parameter. Should be an array of strings' };
+            return {
+                isValid: false, message: 'Invalid \'to\' parameter. Should be an array of strings'
+            };
         }
 
         for (const emailAddress of mailMessage.to) {
@@ -48,17 +54,23 @@ class EmailValidator {
 
         // 'from' checks
         if (!mailMessage.from) {
-            return { isValid: false, message: 'Missing \'from\' parameter' };
+            return {
+                isValid: false, message: 'Missing \'from\' parameter'
+            };
         }
 
         // 'subject' checks
         if (!mailMessage.subject) {
-            return { isValid: false, message: 'Missing \'subject\' parameter' };
+            return {
+                isValid: false, message: 'Missing \'subject\' parameter'
+            };
         }
 
         // 'text' checks
         if (!mailMessage.text) {
-            return { isValid: false, message: 'Missing \'text\' parameter' };
+            return {
+                isValid: false, message: 'Missing \'text\' parameter'
+            };
         }
 
         return {
