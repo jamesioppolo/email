@@ -15,7 +15,7 @@ describe('Email system', () => {
     });
 
     it('sends return code when email(s) are sent OK', (done) => {
-        sinon.stub(MailController.prototype, 'send').callsFake(async body => {
+        sinon.stub(MailController.prototype, 'send').callsFake(async () => {
             return {
                 statusCode: 200,
                 message: 'ok'
@@ -34,7 +34,7 @@ describe('Email system', () => {
     });
 
     it('sends fail code when any errors occur', (done) => {
-        sinon.stub(MailController.prototype, 'send').callsFake(async body => {
+        sinon.stub(MailController.prototype, 'send').callsFake(async () => {
             return {
                 statusCode: 500,
                 message: 'bad request'

@@ -12,6 +12,18 @@ class MailgunService {
         return form;
     }
 
+    callMailgun(options) {
+        return new Promise(resolve => {
+            request.post(options, (err, res) => {
+                resolve({
+                    statusCode: res.statusCode,
+                    message: res.body,
+                    error: err
+                });
+            });
+        });
+    }
+
     async send(mailMessage) {
 
         var form = {
@@ -33,15 +45,7 @@ class MailgunService {
             form: form,
             method: 'POST'
         }
-        return await new Promise(resolve => {
-            request.post(options, (err, res) => {
-                resolve({
-                    statusCode: res.statusCode,
-                    message: res.body,
-                    error: err
-                });
-            });
-        });
+        return await this.callMailgun(options);
     }
 }
 

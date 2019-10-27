@@ -1,9 +1,9 @@
-const SendgridService = require("../services/SendgridService");
-var sendgridService = new SendgridService;
-const MailgunService = require("../services/MailgunService");
-var mailgunService = new MailgunService;
+const SendgridService = require('../services/SendgridService');
+const sendgridService = new SendgridService;
+const MailgunService = require('../services/MailgunService');
+const mailgunService = new MailgunService;
 const EmailValidator = require('./EmailValidator');
-var emailValidator = new EmailValidator;
+const emailValidator = new EmailValidator;
 
 class MailController {
     isResponseOk(statusCode) {

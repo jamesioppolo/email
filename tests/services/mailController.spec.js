@@ -1,5 +1,5 @@
 const MailController = require('../../services/MailController');
-var mailController = new MailController();
+const mailController = new MailController();
 const SendgridService = require("../../services/SendgridService");
 const MailgunService = require("../../services/MailgunService");
 const sinon = require('sinon');
@@ -18,41 +18,38 @@ describe('Mail Controller', () => {
         sinon.restore();
     });
 
-    it('calls sendgrid first', () => {
+    it('calls sendgrid first', async () => {
         sinon.stub(SendgridService.prototype, 'send').callsFake(async body => {
             return { statusCode: 200, message: 'ok from sendGrid' };
         });
 
-        mailController.send(mailMessage, (response) => {
-            assert.equal(response.statusCode, 200);
-            assert.equal(response.message, 'ok from sendGrid');
-        });
+        var response = await mailController.send(mailMessage);
+        assert.equal(response.statusCode, 200);
+        assert.equal(response.message, 'ok from sendGrid');
     });
 
-    it('fails over from sendGrid to mailGun', () => {
+    it('fails over from sendGrid to mailGun', async () => {
         sinon.stub(SendgridService.prototype, 'send').callsFake(async body => {
             return { statusCode: 500, message: 'bad code from sendGrid' };
         });
         sinon.stub(MailgunService.prototype, 'send').callsFake(async body => {
             return { statusCode: 200, message: 'ok from mailgun' };
         });
-        mailController.send(mailMessage, (response) => {
-            assert.equal(response.statusCode, 200);
-            assert.equal(response.message, 'ok from mailgun');
-        });
+        var response = await mailController.send(mailMessage);
+        assert.equal(response.statusCode, 200);
+        assert.equal(response.message, 'ok from mailgun');
     });
 
-    it('returns both error messages when both sendGrid and mailGun are down', () => {
+    it('returns both error messages when both sendGrid and mailGun are down', async () => {
         sinon.stub(SendgridService.prototype, 'send').callsFake(async body => {
             return { statusCode: 500, message: 'bad code from sendGrid' };
         });
         sinon.stub(MailgunService.prototype, 'send').callsFake(async body => {
             return { statusCode: 500, message: 'bad code from mailgun' };
         });
-        mailController.send(mailMessage, (response) => {
-            assert.equal(response.statusCode, 500);
-            assert.equal(response.message, 'bad code from mailgun');
-            assert.equal(response.previousResponse.message, 'bad code from sendGrid');
-        });
+        var response = await mailController.send(mailMessage);
+        assert.equal(response.statusCode, 500);
+        assert.equal(response.message, 'bad code from mailgun');
+        assert.equal(response.previousResponse.message, 'bad code from sendGrid');
     });
 });
