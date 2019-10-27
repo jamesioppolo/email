@@ -51,7 +51,6 @@ class MailgunService {
     }
 
     async send(mailMessage) {
-
         const httpOptions = this.getHttpOptions(mailMessage);
         try {
             return await this.callMailgun(httpOptions);
