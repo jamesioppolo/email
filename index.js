@@ -20,8 +20,14 @@ var server = app.listen(process.env.PORT, () => {
 });
 
 app.post('/email', async (req, res) => {
-    const response = await mailController.send(req.body);
-    res.status(response.statusCode).send(response);
+    try {
+        const response = await mailController.send(req.body);
+        res.status(response.statusCode).send(response);
+    } catch(error) {
+        console.log(error); // use a cloud logging system instead
+        res.status(500).send(error);
+    }
+
 });
 
 module.exports = server;

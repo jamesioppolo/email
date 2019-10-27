@@ -45,7 +45,16 @@ class MailgunService {
             form: form,
             method: 'POST'
         }
-        return await this.callMailgun(options);
+        try {
+            return await this.callMailgun(options);
+        } catch(error) {
+            console.log(error); // use cloud logging system instead
+            return {
+                statusCode: 500,
+                message: "Check the logs",
+                error: "Unknown Error occurred"
+            }
+        }
     }
 }
 

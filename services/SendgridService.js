@@ -59,7 +59,16 @@ class SendgridService {
             headers: headers,
             body: JSON.stringify(dataString)
         };
-        return await this.callSendgrid(options);
+        try {
+            return await this.callSendgrid(options);
+        } catch(error) {
+            console.log(error); // use cloud logging instead
+            return {
+                statusCode: 500,
+                response: "Check the logs",
+                error: "Unknown error occured"
+            }
+        }         
     }
 }
 
