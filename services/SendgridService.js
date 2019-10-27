@@ -12,6 +12,18 @@ class SendgridService {
         return emailList;
     }
 
+    callSendgrid(options) {
+        return new Promise(resolve => {
+            request(options, (err, res) => {
+                resolve({
+                    statusCode: res.statusCode,
+                    response: res.headers,
+                    error: err
+                });
+            });
+        });
+    }
+
     async send(mailMessage) {
         var dataString = {
             "personalizations": [
@@ -47,15 +59,7 @@ class SendgridService {
             headers: headers,
             body: JSON.stringify(dataString)
         };
-        return await new Promise(resolve => {
-            request(options, (err, res) => {
-                resolve({
-                    statusCode: res.statusCode,
-                    response: res.headers,
-                    error: err
-                });
-            });
-        });
+        return await this.callSendgrid(options);
     }
 }
 

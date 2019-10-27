@@ -15,7 +15,7 @@ describe('Mailgun Service', () => {
         sinon.restore();
     });
 
-    it('calls endpoint with correct form data', async () => {
+    it('calls endpoint with correct method and form data', async () => {
         sinon.stub(mailgunService, 'callMailgun').callsFake(() => {
             return { statusCode: 200 };
         });
