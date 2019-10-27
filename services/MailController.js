@@ -16,7 +16,8 @@ class MailController {
         if (!mailMessageValidity.isValid) {
             response = {
                 statusCode: 400,
-                message: mailMessageValidity.message
+                message: "Invalid message",
+                error: emailMessageValidity.message
             };
         } else {
             let client1 = sendgridService;
