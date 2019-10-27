@@ -1,6 +1,6 @@
 const request = require('request');
 
-class Sendgrid {
+class SendgridService {
 
     getPersonalizationsFor(mailAddresses) {
         var emailList = [];
@@ -59,4 +59,4 @@ class Sendgrid {
     }
 }
 
-module.exports = Sendgrid;
+module.exports = SendgridService;

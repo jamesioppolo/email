@@ -1,6 +1,6 @@
 const request = require('request');
 
-class Mailgun {
+class MailgunService {
 
     addFormDataFrom(mailList, type, form) {
         form[type] = [];
@@ -45,4 +45,4 @@ class Mailgun {
     }
 }
 
-module.exports = Mailgun;
+module.exports = MailgunService;

@@ -1,8 +1,8 @@
-const Sendgrid = require("../services/sendgrid");
-var sendgrid = new Sendgrid;
-const Mailgun = require("../services/mailgun");
-var mailgun = new Mailgun;
-const EmailValidator = require('../services/emailValidator');
+const SendgridService = require("../services/SendgridService");
+var sendgridService = new SendgridService;
+const MailgunService = require("../services/MailgunService");
+var mailgunService = new MailgunService;
+const EmailValidator = require('./EmailValidator');
 var emailValidator = new EmailValidator;
 
 class MailController {
@@ -19,8 +19,8 @@ class MailController {
                 message: mailMessageValidity.message
             };
         } else {
-            let client1 = sendgrid;
-            let client2 = mailgun;
+            let client1 = sendgridService;
+            let client2 = mailgunService;
             var client1Response = await client1.send(mailMessage);
             if (this.isResponseOk(client1Response.statusCode)) {
                 response = client1Response;

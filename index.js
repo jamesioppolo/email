@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express = require('express');
-const MailController = require('./services/mailController');
+const MailController = require('./services/MailController');
 var mailController = new MailController;
 
 const app = express();

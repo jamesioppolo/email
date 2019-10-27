@@ -1,5 +1,5 @@
 const assert = require('assert');
-const EmailValidator = require('../../services/emailValidator');
+const EmailValidator = require('../../services/EmailValidator');
 var emailValidator = new EmailValidator;
 
 describe('Email Validator', () => {
