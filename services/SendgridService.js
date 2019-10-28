@@ -21,26 +21,26 @@ class SendgridService {
 
     getDataString(mailMessage) {
         var dataString = {
-            "personalizations": [
+            'personalizations': [
                 {
-                    "to": this.getPersonalizationsFor(mailMessage.to)
+                    'to': this.getPersonalizationsFor(mailMessage.to)
                 }
             ],
-            "from": {
-                "email": mailMessage.from
+            'from': {
+                'email': mailMessage.from
             },
-            "subject": mailMessage.subject,
-            "content": [
+            'subject': mailMessage.subject,
+            'content': [
                 {
-                    "type": "text/plain",
-                    "value": mailMessage.text
+                    'type': 'text/plain',
+                    'value': mailMessage.text
                 }
             ]
         };
-        if (mailMessage.cc && mailMessage.cc !== "") {
+        if (mailMessage.cc && mailMessage.cc !== '') {
             dataString.personalizations.cc = this.getPersonalizationsFor(mailMessage.cc);
         }
-        if (mailMessage.bcc && mailMessage.bcc !== "") {
+        if (mailMessage.bcc && mailMessage.bcc !== '') {
             dataString.personalizations.bcc = this.getPersonalizationsFor(mailMessage.bcc);
         }
         return JSON.stringify(dataString);
