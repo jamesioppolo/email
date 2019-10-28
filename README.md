@@ -1,5 +1,5 @@
 # Email handler
-This email handler application sends an email using the SendGrid system using the MailGun system as a failover. The RESTful API endpoint requires a body to be sent with the following json structure. The `cc` and `bcc` fields ae optional. All other fields are required
+This email handler application sends an email using the SendGrid system using the MailGun system as a failover. The RESTful API endpoint requires a body to be sent with the following `JSON` structure. The `cc` and `bcc` fields are optional. All other fields are required
 
 ```
 {
