@@ -69,6 +69,6 @@ curl -X POST \
 
 ## Tests
 
-Execute the following command to run the unit tests in the project
+Execute the following command to run the unit tests in the project:
 
 `npm run test`
